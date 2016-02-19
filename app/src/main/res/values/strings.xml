@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MHCI4</string>
+    <string name="budget_create_hint">What is your budget?</string>
+    <string name="calendar_create_hint">When do you need it?</string>
+</resources>
