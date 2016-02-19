@@ -3,18 +3,20 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
+    <TextView
         android:id="@+id/et_desc_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_toLeftOf="@+id/et_qty_item"
+        android:textColor="#000000"
         android:maxLines="1"/>
 
-    <EditText
+    <TextView
         android:id="@+id/et_qty_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
         android:layout_alignParentRight="true"
+        android:textColor="#000000"
         android:maxLines="1"/>
 
 

@@ -3,9 +3,11 @@ package com.mhci4.mhci4.library;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.mhci4.mhci4.R;
 
@@ -46,19 +48,20 @@ public class CreateListAdapter extends BaseSwipListAdapter{
             new ViewHolder(convertView);
         }
         ViewHolder holder = (ViewHolder) convertView.getTag();
-//        ApplicationInfo item = getItem(position);
-//        holder.item_desc.setImageDrawable(item.loadIcon(getPackageManager()));
-//        holder.item_qty.setText(item.loadLabel(getPackageManager()));
+        GroceryItem item = (GroceryItem)getItem(position);
+        holder.item_desc.setText(item.getDesc());
+        holder.item_qty.setText(Integer.toString(item.getQuantity()));
+        Log.i("CreateListAdapter","Desc: " + item.getDesc() + ", Qty: " + item.getQuantity());
         return convertView;
     }
 
     class ViewHolder {
-        EditText item_desc;
-        EditText item_qty;
+        TextView item_desc;
+        TextView item_qty;
 
         public ViewHolder(View view) {
-            item_desc = (EditText) view.findViewById(R.id.et_desc_item);
-            item_qty = (EditText) view.findViewById(R.id.et_qty_item);
+            item_desc = (TextView) view.findViewById(R.id.et_desc_item);
+            item_qty = (TextView) view.findViewById(R.id.et_qty_item);
             view.setTag(this);
         }
     }
