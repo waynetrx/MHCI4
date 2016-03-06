@@ -8,4 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MHCI4Theme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorBase</item>
+        <item name="colorPrimaryDark">@color/colorBaseDark</item>
+        <item name="colorAccent">@color/colorAccentBlue</item>
+       <!-- <item name="android:buttonStyle">@style/MHCI4Button</item>-->
+    </style>
+
+    <!--<style name="MHCI4Button" parent="android:Widget.Button">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">@color/colorAccentRed</item>
+    </style>-->
+
 </resources>

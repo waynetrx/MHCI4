@@ -51,7 +51,6 @@ public class CreateListAdapter extends BaseSwipListAdapter{
         GroceryItem item = (GroceryItem)getItem(position);
         holder.item_desc.setText(item.getDesc());
         holder.item_qty.setText(Integer.toString(item.getQuantity()));
-        Log.i("CreateListAdapter","Desc: " + item.getDesc() + ", Qty: " + item.getQuantity());
         return convertView;
     }
 

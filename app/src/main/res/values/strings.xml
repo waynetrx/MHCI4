@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">MHCI4</string>
-    <string name="budget_create_hint">What is your budget?</string>
-    <string name="calendar_create_hint">When do you need it?</string>
+    <string name="app_name">New Grocery Job</string>
+    <string name="budget_create_hint">Budget?</string>
+    <string name="calendar_create_hint">When?</string>
+    <string name="location_create_hint">Where?</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="google_app_id">166683549756</string>
 </resources>

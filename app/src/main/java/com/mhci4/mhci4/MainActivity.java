@@ -18,8 +18,10 @@ import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.mhci4.mhci4.gcm.GCMHandler;
 import com.mhci4.mhci4.library.CreateListAdapter;
 import com.mhci4.mhci4.library.GroceryItem;
+import com.mhci4.mhci4.retrofit.RetrofitHandler;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -28,13 +30,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity implements TextWatcher,TimePickerDialog.OnTimeSetListener,DatePickerDialog.OnDateSetListener {
+public class MainActivity extends AppCompatActivity implements TextWatcher,TimePickerDialog.OnTimeSetListener,DatePickerDialog.OnDateSetListener,RetrofitHandler.RetrofitCallback {
 
     EditText etBudget;
     TextView etDeadline;
     private SwipeMenuListView mListView;
     private CreateListAdapter mAdapter;
-
+    ArrayList<GroceryItem> items;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,10 @@ public class MainActivity extends AppCompatActivity implements TextWatcher,TimeP
         etBudget = (EditText) findViewById(R.id.et_budget_create);
         etDeadline = (TextView) findViewById(R.id.et_calendar_create);
         mListView = (SwipeMenuListView) findViewById(R.id.list_grocery_create);
+
+        Log.i("MainActivity",",main activity calling");
+        GCMHandler gcmHandler = new GCMHandler(getApplicationContext());
+        gcmHandler.initialize();
 
         etBudget.setRawInputType(Configuration.KEYBOARD_12KEY);
         etBudget.addTextChangedListener(this);
@@ -62,7 +68,15 @@ public class MainActivity extends AppCompatActivity implements TextWatcher,TimeP
             }
         });
 
-        ArrayList<GroceryItem> items = new ArrayList<GroceryItem>();
+        items = new ArrayList<GroceryItem>();
+        items.add(new GroceryItem(5,"Cabbage"));
+        items.add(new GroceryItem(2,"Pork"));
+        items.add(new GroceryItem(5,"Cabbage"));
+        items.add(new GroceryItem(2,"Pork"));
+        items.add(new GroceryItem(5,"Cabbage"));
+        items.add(new GroceryItem(2,"Pork"));
+        items.add(new GroceryItem(5,"Cabbage"));
+        items.add(new GroceryItem(2,"Pork"));
         items.add(new GroceryItem(5,"Cabbage"));
         items.add(new GroceryItem(2,"Pork"));
         mAdapter = new CreateListAdapter(getApplicationContext(),items);
@@ -86,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher,TimeP
                 // set item title fontsize
                 openItem.setTitleSize(18);
                 // set item title font color
-                openItem.setTitleColor(Color.WHITE);
+                openItem.setTitleColor(Color.BLACK);
                 // add to menu
                 menu.addMenuItem(openItem);
 
@@ -107,6 +121,21 @@ public class MainActivity extends AppCompatActivity implements TextWatcher,TimeP
         // set creator
         mListView.setMenuCreator(creator);
 
+        mListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                switch(index)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        items.remove(position);
+                        mAdapter.notifyDataSetChanged();
+                        break;
+                }
+                return false;
+            }
+        });
 
     }
 
@@ -114,8 +143,6 @@ public class MainActivity extends AppCompatActivity implements TextWatcher,TimeP
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
                 getResources().getDisplayMetrics());
     }
-
-
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -148,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher,TimeP
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM, yyyy");
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         cal.set(Calendar.MONTH, monthOfYear);
@@ -162,4 +189,8 @@ public class MainActivity extends AppCompatActivity implements TextWatcher,TimeP
     }
 
 
+    @Override
+    public void onResponse(int resultCode, boolean result, Object data) {
+
+    }
 }
