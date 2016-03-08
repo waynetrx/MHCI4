@@ -3,9 +3,13 @@ package com.mhci4.mhci4.retrofit;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.mhci4.mhci4.MainActivity;
 
 public class Item {
 
+    @SerializedName("iid")
+    @Expose
+    private Integer iid;
     @SerializedName("jid")
     @Expose
     private Integer jid;
@@ -21,6 +25,17 @@ public class Item {
     @SerializedName("status")
     @Expose
     private Integer status;
+
+    public Item()
+    {}
+
+    public Item(String description,int quantity)
+    {
+        this.iid = MainActivity.itemId.incrementAndGet();
+        this.description = description;
+        this.quantity = quantity;
+    }
+
 
     /**
      *
@@ -112,4 +127,25 @@ public class Item {
         this.status = status;
     }
 
+    public Integer getIid() {
+        return iid;
+    }
+
+    public void setIid(Integer iid) {
+        this.iid = iid;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof Item)
+        {
+            Item item = (Item)o;
+            if(iid != null)
+            {
+                return this.iid.compareTo(item.getIid()) == 0;
+            }
+
+        }
+        return false;
+    }
 }

@@ -9,12 +9,17 @@ import retrofit.Retrofit;
 
 public class RetrofitHandler implements Callback<API> {
 
-    public static final String REST_BASE_URL = "http://172.17.193.129:8080";
+    //public static final String REST_BASE_URL = "http://192.168.0.108:8080";
+    public static final String REST_BASE_URL = "http://electricvibes.net";
     public static final int RESULT_SAVE_GCM = 101;
+    public static final int RESULT_RETRIEVE_USER_PROFILE = 102;
+    public static final int RESULT_SET_JOB_RUNNER = 103;
+    public static final int RESULT_RETRIEVE_JOB = 104;
+
     Retrofit mRetrofit;
     APIServiceInterface mApiService;
     RetrofitCallback mCallback;
-    int resultCode = -1;
+    int requestCode = -1;
 
     public RetrofitHandler(RetrofitCallback callback)
     {
@@ -29,12 +34,47 @@ public class RetrofitHandler implements Callback<API> {
     public void saveGCMToken(int uid, String token)
     {
         Call<API> call = mApiService.setGCMToken(uid,token);
-        resultCode = RESULT_SAVE_GCM;
+        requestCode = RESULT_SAVE_GCM;
         call.enqueue(this);
     }
 
+    public void retrieveUserProfile(int uid)
+    {
+        Call<API> call = mApiService.retrieveUserById(uid);
+        requestCode = RESULT_RETRIEVE_USER_PROFILE;
+        call.enqueue(this);
+    }
+
+    public void retrieveJobByID(int jid)
+    {
+        Call<API> call = mApiService.retrieveJobById(jid);
+        requestCode = RESULT_RETRIEVE_JOB;
+        call.enqueue(this);
+    }
+
+
+    public void setJobRunner(int jid,int rid)
+    {
+        Call<API> call = mApiService.setJobRunner(jid,rid);
+        requestCode = RESULT_SET_JOB_RUNNER;
+        call.enqueue(this);
+    }
+
+
     @Override
     public void onResponse(Response<API> response, Retrofit retrofit) {
+
+        switch(requestCode)
+        {
+            case RESULT_RETRIEVE_USER_PROFILE:
+                mCallback.onResponse(requestCode,true,response.body().getUser());
+                break;
+            case RESULT_RETRIEVE_JOB:
+                mCallback.onResponse(requestCode,true,response.body().getJobData());
+                break;
+            default:
+                break;
+        }
 
     }
 

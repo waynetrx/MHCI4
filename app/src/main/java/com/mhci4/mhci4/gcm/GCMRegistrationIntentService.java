@@ -35,7 +35,7 @@ public class GCMRegistrationIntentService extends IntentService {
 
     private void saveTokenToServer(int uid, String token)
     {
-        APIAsyncTask task = new APIAsyncTask(RetrofitHandler.RESULT_SAVE_GCM);
+        APIAsyncTask task = new APIAsyncTask(RetrofitHandler.RESULT_SAVE_GCM,null);
         task.setGcmToken(uid,token);
         task.execute();
     }

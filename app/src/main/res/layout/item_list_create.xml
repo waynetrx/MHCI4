@@ -1,24 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="20dp">
+    android:layout_height="@dimen/item_height">
 
-    <TextView
-        android:id="@+id/et_desc_item"
+
+    <RelativeLayout
+        android:tag="reveal-right"
+        android:background="@color/colorAccentRed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:tint="#FFFFFF"
+            android:src="@drawable/ic_delete_black_24dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:tag="reveal-left"
+        android:background="@color/colorAccentRed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_delete_svg"/>
+    </RelativeLayout>
+
+
+
+
+    <RelativeLayout
+        android:tag="front"
+        android:background="#FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/et_qty_item"
-        android:textColor="#000000"/>
+        android:padding="@dimen/item_padding">
 
-    <TextView
-        android:id="@+id/et_qty_item"
-        android:layout_width="50dp"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:textColor="#000000"/>
+        <TextView
+            android:tag="front"
+            android:id="@+id/et_desc_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/et_qty_item"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:id="@+id/et_qty_item"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:textColor="#000000"/>
+
+    </RelativeLayout>
 
 
-</RelativeLayout>
+
+</FrameLayout>
+
+

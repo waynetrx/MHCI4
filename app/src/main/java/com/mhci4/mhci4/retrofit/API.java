@@ -42,6 +42,23 @@ public class API {
         this.error = error;
     }
 
+
+    public JobData getJobData() {
+        return jobData;
+    }
+
+    public void setJobData(JobData jobData) {
+        this.jobData = jobData;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     /**
      *
      * @return

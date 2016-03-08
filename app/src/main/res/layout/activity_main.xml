@@ -3,16 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="5dp"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+
     tools:context="com.mhci4.mhci4.MainActivity">
 
     <LinearLayout
         android:id="@+id/budget_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:orientation="horizontal">
         
         <RelativeLayout
@@ -95,6 +95,8 @@
         android:id="@+id/address_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:layout_below="@+id/budget_row">
 
         <ImageView
@@ -121,7 +123,14 @@
         </RelativeLayout>
 
 
-    <com.baoyz.swipemenulistview.SwipeMenuListView
+<!--    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:id="@+id/list_grocery_create"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/address_row"
+        android:layout_above="@+id/button_row"/>-->
+
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/list_grocery_create"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -132,26 +141,44 @@
         android:id="@+id/button_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:layout_alignParentBottom="true">
 
-        <Button
-            android:id="@+id/btn_create_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@color/colorAccentRed"
-            android:textColor="#FFFFFF"
-            android:text="Submit"/>
-
-        <Button
+        <!--<Button
             android:id="@+id/btn_create_add_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_marginRight="5dp"
             android:background="@color/colorAccentBlue"
-
             android:textColor="#FFFFFF"
-            android:text="Add item"/>
+            android:text="Add item"/>-->
+
+        <!--<Button
+            android:id="@+id/btn_create_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccentRed"
+            android:textColor="#FFFFFF"
+            android:text="Submit"/>-->
+
+        <com.dd.processbutton.iml.ActionProcessButton
+            android:id="@+id/btnSaveGrocery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            custom:pb_colorComplete="@color/colorBaseDark"
+            custom:pb_colorNormal="@color/colorAccentRed"
+            custom:pb_colorPressed="@color/colorAccentLightRed"
+            custom:pb_colorProgress="@color/colorAccentBlue"
+            custom:pb_textComplete="Task Posted"
+            custom:pb_textProgress="Sending"
+            custom:pb_textError="Error"
+            custom:pb_colorError="@color/colorError" />
+
+
+
 
     </RelativeLayout>
 

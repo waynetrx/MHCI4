@@ -54,8 +54,7 @@
 
         <activity
             android:name=".library.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
-
+            android:label="@string/title_activity_maps" />
 
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
@@ -63,6 +62,7 @@
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="com.mhci4.mhci4" />
             </intent-filter>
         </receiver>
@@ -87,6 +87,10 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+        <activity
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".JobsActivity"></activity>
     </application>
 
 </manifest>
