@@ -21,7 +21,8 @@ public class CreateListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private Context mContext;
 
 
-
+    public static final int ITEMS_ROW = 2;
+    public static final int ADD_ROW = 3;
     public class CreateListViewHolder extends SwipeToAction.ViewHolder<Item>
     {
 
@@ -43,21 +44,17 @@ public class CreateListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.i("CreateListAdapter","onCreateViewHolder");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_create,parent,false);
         return new CreateListViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Log.i("CreateListAdapter","onBindViewHolder");
         Item item = mItems.get(position);
-        Log.i("CreateListAdapter","Desc: " + item.getDescription() + ", Quantity: " + item.getQuantity());
         CreateListViewHolder listHolder = (CreateListViewHolder)holder;
         listHolder.data = item;
         listHolder.tvDesc.setText(item.getDescription());
         listHolder.tvQuantity.setText(Integer.toString(item.getQuantity()));
-
     }
 
     @Override

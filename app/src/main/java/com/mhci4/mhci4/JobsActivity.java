@@ -71,7 +71,6 @@ public class JobsActivity extends FragmentActivity implements MaterialTabListene
     @Override
     public void onPageSelected(int position)
     {
-        Log.i("JobsActivity","Position: " + position);
         tabHost.setSelectedNavigationItem(position);
     }
 

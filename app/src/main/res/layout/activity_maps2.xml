@@ -1,8 +1,42 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    tools:context="com.mhci4.mhci4.MapsActivity">
+
+
+<fragment
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/map"
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.mhci4.mhci4.MapsActivity" />
+    android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#FFFFFF"
+        android:layout_gravity="center_horizontal|top">
+
+        <com.mhci4.mhci4.library.DelayedAutoCompleteTextView
+            android:id="@+id/ac_map_search"
+            android:layout_toLeftOf="@+id/btn_map_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Enter address"
+            android:inputType="text"
+            android:layout_weight="3"
+            />
+
+        <Button
+            android:id="@+id/btn_map_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="Confirm"
+            android:layout_weight="1"/>
+
+        </RelativeLayout>
+
+
+</FrameLayout>

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorLightGray"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
 
     tools:context="com.mhci4.mhci4.MainActivity">
@@ -13,6 +14,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:background="#FFFFFF"
         android:orientation="horizontal">
         
         <RelativeLayout
@@ -71,6 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
+                android:editable="false"
                 android:ellipsize="start"
                 android:gravity="center_horizontal"
                 android:singleLine="true"

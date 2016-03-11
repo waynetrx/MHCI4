@@ -3,7 +3,6 @@ package com.mhci4.mhci4;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,7 +21,7 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.mhci4.mhci4.gcm.GCMHandler;
 import com.mhci4.mhci4.library.CreateListAdapter;
-import com.mhci4.mhci4.retrofit.APIAsyncTask;
+import com.mhci4.mhci4.library.PlaceAutoComplete;
 import com.mhci4.mhci4.retrofit.Item;
 import com.mhci4.mhci4.retrofit.JobData;
 import com.mhci4.mhci4.retrofit.RetrofitHandler;
@@ -38,15 +37,21 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import android.support.design.widget.Snackbar;
 
-import co.dift.ui.SwipeToAction;
 
 public class MainActivity extends AppCompatActivity implements TextWatcher,TimePickerDialog.OnTimeSetListener,
         DatePickerDialog.OnDateSetListener,RetrofitHandler.RetrofitCallback, View.OnClickListener {
 
     public static AtomicInteger itemId = new AtomicInteger(0);
+    public static final int MENU_ERRAND_CREATE = 101;
+    public static final int MENU_VIEW_ERRAND = 102;
+    public static final int LOCATION_REQUEST = 1;
+    public static final int RESULT_SUCCESS = 1;
+    public static final int RESULT_FAILED = -1;
 
     EditText etBudget;
-    TextView etDeadline;
+    EditText etAddress;
+    EditText etCalendar;
+    EditText etDestination;
     private SwipeMenuListView mListView;
     private CreateListAdapter mAdapter;
     List<Item> items;
@@ -54,14 +59,13 @@ public class MainActivity extends AppCompatActivity implements TextWatcher,TimeP
     Button btnSaveGrocery;*/
     ActionProcessButton btnSignIn;
     RecyclerView recyclerView;
-    SwipeToAction swipeToAction;
     RetrofitHandler.RetrofitCallback callback;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         etBudget = (EditText) findViewById(R.id.et_budget_create);
-        etDeadline = (TextView) findViewById(R.id.et_calendar_create);
+        etCalendar = (EditText) findViewById(R.id.et_calendar_create);
         callback = this;
         /*btnAddItem = (Button)findViewById(R.id.btn_create_add_item);
         btnAddItem.setOnClickListener(this);
@@ -70,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements TextWatcher,TimeP
         btnSignIn = (ActionProcessButton) findViewById(R.id.btnSaveGrocery);
         btnSignIn.setMode(ActionProcessButton.Mode.ENDLESS);
         btnSignIn.setOnClickListener(this);
+        etAddress = (EditText)findViewById(R.id.et_address);
+        etAddress.setOnClickListener(this);
 
         items = new ArrayList<Item>();
         recyclerView = (RecyclerView)findViewById(R.id.list_grocery_create);
@@ -81,36 +87,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher,TimeP
         mAdapter = new CreateListAdapter(getApplicationContext(),items);
         recyclerView.setAdapter(mAdapter);
 
-        swipeToAction = new SwipeToAction(recyclerView, new SwipeToAction.SwipeListener<Item>()
-        {
 
-            @Override
-            public boolean swipeLeft(final Item itemData) {
-                final int position = removeItem(itemData);
-                displaySnackbar(itemData.getDescription() + " removed", "Undo", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        addItemAtPos(position,itemData);
-                    }
-                });
-                return true;
-            }
-
-            @Override
-            public boolean swipeRight(Item itemData) {
-                Log.i("SWIPELEFT","Desc: " + itemData.getDescription());
-                return true;
-            }
-
-            @Override
-            public void onClick(Item itemData) {
-            }
-
-            @Override
-            public void onLongClick(Item itemData) {
-
-            }
-        });
 
         // use swipeLeft or swipeRight and the elem position to swipe by code
     /*    new Handler().postDelayed(new Runnable() {
@@ -132,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher,TimeP
         etBudget.setRawInputType(Configuration.KEYBOARD_12KEY);
         etBudget.addTextChangedListener(this);
 
-        etDeadline.setOnClickListener(new View.OnClickListener() {
+        etCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i("EditText", "Calendar et clicked!");
@@ -148,9 +125,9 @@ public class MainActivity extends AppCompatActivity implements TextWatcher,TimeP
             }
         });
 
-
-
     }
+
+
 
     private void populate()
     {
@@ -176,9 +153,9 @@ public class MainActivity extends AppCompatActivity implements TextWatcher,TimeP
                 .setAction(actionName, action);
 
         View v = snack.getView();
-        v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.colorGray));
+        v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.colorDarkGray));
         ((TextView) v.findViewById(android.support.design.R.id.snackbar_text)).setTextColor(Color.WHITE);
-        ((TextView) v.findViewById(android.support.design.R.id.snackbar_action)).setTextColor(Color.BLACK);
+        ((TextView) v.findViewById(android.support.design.R.id.snackbar_action)).setTextColor(Color.WHITE);
 
         snack.show();
     }
@@ -206,6 +183,20 @@ public class MainActivity extends AppCompatActivity implements TextWatcher,TimeP
         items.add(item);
         mAdapter.notifyItemInserted(items.size()-1);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == LOCATION_REQUEST && resultCode != RESULT_FAILED)
+        {
+            if(data != null)
+            {
+                Bundle bundle = data.getExtras();
+                PlaceAutoComplete place = bundle.getParcelable("location");
+                etAddress.setText(place.getDesc());
+            }
+        }
+    }
+
 
 
     @Override
@@ -244,7 +235,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher,TimeP
         cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         cal.set(Calendar.MONTH, monthOfYear);
         cal.set(Calendar.YEAR, year);
-        etDeadline.setText(sdf.format(cal.getTime()));
+        etAddress.setText(sdf.format(cal.getTime()));
     }
 
     @Override
@@ -275,8 +266,10 @@ public class MainActivity extends AppCompatActivity implements TextWatcher,TimeP
 
     }
 
+
     @Override
     public void onClick(View v) {
+        Log.i("ViewID","ID: " + v.getId() + ", res id: " + R.id.et_address);
         switch(v.getId())
         {
             /*case R.id.btn_create_add_item:
@@ -300,13 +293,20 @@ public class MainActivity extends AppCompatActivity implements TextWatcher,TimeP
                         task.setJobID(2);
                         task.execute();
                     }
-                }, 3000);*/
+                }, 3000);
+*/
+                break;
+            case R.id.et_address:
 
-
+                Intent mapIntent = new Intent(getApplicationContext(),MapsActivity.class);
+                startActivityForResult(mapIntent,LOCATION_REQUEST);
                 break;
             default:
                 break;
         }
 
     }
+
+
+
 }

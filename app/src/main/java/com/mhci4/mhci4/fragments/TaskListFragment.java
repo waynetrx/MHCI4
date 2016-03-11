@@ -2,6 +2,7 @@ package com.mhci4.mhci4.fragments;
 
 
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -13,20 +14,29 @@ import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.mhci4.mhci4.R;
-import com.squareup.picasso.Picasso;
+import com.mhci4.mhci4.library.CreateListAdapter;
+import com.mhci4.mhci4.library.ErrandListAdapter;
+import com.mhci4.mhci4.retrofit.APIAsyncTask;
+import com.mhci4.mhci4.retrofit.Grocery;
+import com.mhci4.mhci4.retrofit.RetrofitHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class TaskListFragment extends Fragment
+public class TaskListFragment extends Fragment implements RetrofitHandler.RetrofitCallback
 {
-    CircleImageView profilePic;
-    ImageView profileTest;
+    RecyclerView recyclerView;
+    List<Grocery> groceries;
     public TaskListFragment()
     {
     }
@@ -39,24 +49,49 @@ public class TaskListFragment extends Fragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_task_list,container,false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        profilePic = (CircleImageView)view.findViewById(R.id.profile_image);
-        profileTest = (ImageView)view.findViewById(R.id.profile_test);
-        Picasso.with(getContext()).load("https://igcdn-photos-h-a.akamaihd.net/hphotos-ak-xaf1/t51.2885-19/s150x150/12717098_1195989490424375_783062561_a.jpg")
-                .noFade()
-                .into(profilePic);
+        APIAsyncTask apiAsyncTask = new APIAsyncTask(RetrofitHandler.RESULT_RETRIEVE_ALL_JOBS,this);
+        apiAsyncTask.execute();
+        groceries = new ArrayList<Grocery>();
+        recyclerView = (RecyclerView)view.findViewById(R.id.list_errands);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
 
-        Bitmap icon = BitmapFactory.decodeResource(getContext().getResources(),
-                R.drawable.profile_pic);
-        profileTest.setImageBitmap(toRoundBitmap(icon));
+
+
+
+    }
+
+    @Override
+    public void onResponse(int resultCode, boolean result, Object data) {
+        switch(resultCode)
+        {
+            case RetrofitHandler.RESULT_RETRIEVE_ALL_JOBS:
+                if(data != null)
+                {
+                    groceries = (List<Grocery>) data;
+                    ErrandListAdapter mAdapter = new ErrandListAdapter(getContext(),groceries);
+                    recyclerView.setAdapter(mAdapter);
+                   /* List<Grocery>groceries = (List<Grocery>) data;
+                    for(Grocery g : groceries)
+                    {
+
+                    }*/
+                }
+                break;
+            default:
+                break;
+        }
     }
 
 
-    public static Bitmap toRoundBitmap(Bitmap bitmap) {
+    /*public static Bitmap toRoundBitmap(Bitmap bitmap) {
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
         float roundPx;
@@ -106,5 +141,5 @@ public class TaskListFragment extends Fragment
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(bitmap, src, dst, paint);
         return output;
-    }
+    }*/
 }

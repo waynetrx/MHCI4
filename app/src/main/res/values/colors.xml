@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="colorBaseLighter">#CDFBF1</color>
     <color name="colorBaseLight">#4BECC9</color>
     <color name="colorBase">#3FD8B7</color>
     <color name="colorBaseDark">#40C6A8</color>
@@ -12,5 +13,7 @@
     <color name="colorAccentLightRed">#F27D94</color>
     <color name="colorGray">#0E4438</color>
     <color name="colorLightGray">#D3D3D3</color>
+    <color name="colorDarkGray">#696969</color>
     <color name="colorError">#DF163E</color>
+    <color name="colorFontDark">#2AA58B</color>
 </resources>

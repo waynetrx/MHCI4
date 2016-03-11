@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+
+    <ImageView
+        android:id="@+id/list_errand_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/profile_pic"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/list_errand_deadline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/list_errand_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/list_errand_image"
+        android:layout_marginLeft="8dp"
+        android:layout_centerVertical="true"
+        android:textColor="#34ad93"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_alignBottom="@+id/list_errand_image"
+        android:layout_toRightOf="@+id/list_errand_image"
+        android:layout_marginBottom="3dp">
+
+
+
+        <LinearLayout
+            android:id="@+id/numbers_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ic_budget"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_budget_black"/>
+
+            <TextView
+                android:id="@+id/list_errand_budget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/ic_budget"
+                android:layout_gravity="center_vertical"
+                android:textColor="#808080"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/numbers_row"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ic_item_count"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_item_count_black"/>
+
+            <TextView
+                android:id="@+id/list_errand_itemcount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:textColor="#808080"/>
+
+            </LinearLayout>
+
+
+
+    </RelativeLayout>
+</RelativeLayout>

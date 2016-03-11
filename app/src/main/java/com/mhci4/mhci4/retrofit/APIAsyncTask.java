@@ -41,6 +41,13 @@ public class APIAsyncTask extends AsyncTask<Void,Void,Void> {
         grocery.setRid(rid);
     }
 
+    public void setGCMReceiver(int uid,String title,String message)
+    {
+        user = new User();
+        user.setUserId(uid);
+        user.setAddress(message);
+        user.setImage(title);
+    }
 
 
 
@@ -60,6 +67,12 @@ public class APIAsyncTask extends AsyncTask<Void,Void,Void> {
                 break;
             case RetrofitHandler.RESULT_SET_JOB_RUNNER:
                 rh.setJobRunner(grocery.getJid(),grocery.getRid());
+                break;
+            case RetrofitHandler.RESULT_RETRIEVE_ALL_JOBS:
+                rh.retrieveAllJobs();
+                break;
+            case RetrofitHandler.RESULT_SEND_NOTIFICATION:
+                rh.sendNotification(user.getUserId(),user.getImage(),user.getAddress());
                 break;
             default:
                 break;

@@ -24,4 +24,12 @@ public interface APIServiceInterface
 
     @GET("job/{job_id}")
     Call<API> retrieveJobById(@Path("job_id") int jid);
+
+    @GET("retrieveAllJobs")
+    Call<API> retrieveAllJobs();
+
+    @FormUrlEncoded
+    @POST("notify")
+    Call<API> sendNotification(@Field("user_id") int uid, @Field("title") String title ,@Field("message") String message);
+
 }

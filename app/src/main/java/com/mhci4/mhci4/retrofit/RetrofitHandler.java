@@ -15,6 +15,8 @@ public class RetrofitHandler implements Callback<API> {
     public static final int RESULT_RETRIEVE_USER_PROFILE = 102;
     public static final int RESULT_SET_JOB_RUNNER = 103;
     public static final int RESULT_RETRIEVE_JOB = 104;
+    public static final int RESULT_RETRIEVE_ALL_JOBS = 105;
+    public static final int RESULT_SEND_NOTIFICATION = 106;
 
     Retrofit mRetrofit;
     APIServiceInterface mApiService;
@@ -60,6 +62,20 @@ public class RetrofitHandler implements Callback<API> {
         call.enqueue(this);
     }
 
+    public void retrieveAllJobs()
+    {
+        Call<API> call = mApiService.retrieveAllJobs();
+        requestCode = RESULT_RETRIEVE_ALL_JOBS;
+        call.enqueue(this);
+    }
+
+    public void sendNotification(int uid,String title,String message)
+    {
+        Call<API> call = mApiService.sendNotification(uid,title,message);
+        requestCode = RESULT_SEND_NOTIFICATION;
+        call.enqueue(this);
+    }
+
 
     @Override
     public void onResponse(Response<API> response, Retrofit retrofit) {
@@ -71,6 +87,11 @@ public class RetrofitHandler implements Callback<API> {
                 break;
             case RESULT_RETRIEVE_JOB:
                 mCallback.onResponse(requestCode,true,response.body().getJobData());
+                break;
+            case RESULT_RETRIEVE_ALL_JOBS:
+                mCallback.onResponse(requestCode,true,response.body().getJobsData());
+                break;
+            case RESULT_SEND_NOTIFICATION:
                 break;
             default:
                 break;
